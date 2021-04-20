@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 require('dotenv').config()
 
 
@@ -100,6 +101,18 @@ app.get('/', (req, res) => {
           res.send(admin)
         })
       })
+
+
+      app.patch('/processStatus', (req, res) => {
+        const status = req.query.status;
+        const id = req.query.id;
+        console.log(req.query);
+        orderCollection.updateOne({_id: ObjectId(id)}, { $set : {status: status}})
+        .then(result => {
+          res.send(result.modifiedCount > 0);
+        })
+      })
+
 
 
   });
