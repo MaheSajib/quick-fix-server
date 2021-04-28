@@ -113,6 +113,14 @@ app.get('/', (req, res) => {
         })
       })
 
+      app.delete('/deleteService/:id', (req, res) => {
+        const id = req.params.id;
+        serviceCollection.findOneAndDelete({_id: ObjectId(id)})
+        .then(result => {
+          res.send(result.deletedCount > 0);
+        })
+      })
+
 
 
   });
